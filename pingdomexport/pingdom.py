@@ -3,11 +3,9 @@ import requests
 class Pingdom:
     def __init__(self, config):
         self.__headers = {
-            'App-Key': config.app_key(),
-            'Account-Email': config.account_email(),
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'Authorization': config.app_key()
         }
-        self.__auth = (config.username(), config.password())
 
     def checks(self):
         response = self.__rget('checks')
@@ -28,8 +26,7 @@ class Pingdom:
 
     def __rget(self, uri, params={}):
         return requests.get(
-            'https://api.pingdom.com/api/2.0/' + uri,
-            auth=self.__auth,
+            'https://api.pingdom.com/api/3.1/' + uri,
             headers=self.__headers,
             params=params
         )
